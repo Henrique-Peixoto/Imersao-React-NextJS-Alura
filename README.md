@@ -1,3 +1,7 @@
+# Imersao-React-NextJS-Alura
+  Imersão em React e NextJS. Conteúdo produzido pela Alura. A imersão aconteceu entre os dias 25 e 29 de janeiro.
+  
+  * Protótipo da interface no Figma: https://www.figma.com/file/cg1MIzSRRss8ggpypQbmdD/AluraQuiz?node-id=0%3A1
 # Example app with styled-components
 
 This example features how you use a different styling solution than [styled-jsx](https://github.com/zeit/styled-jsx) that also supports universal styles. That means we can serve the required styles for the first render within the HTML and then load the rest in the client. In this case we are using [styled-components](https://github.com/styled-components/styled-components).
