@@ -1,47 +1,81 @@
-import styled from 'styled-components'
-import db from '../db.json'
-import Widget from '../src/components/widget'
-import Footer from '../src/components/footer'
-import GitHubCorner from '../src/components/gitHubCorner'
-import QuizBackground from '../src/components/quizBackground'
+import React from 'react';
+import styled from 'styled-components';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-const Title = styled.h1`
-  font-size: 50px;
-  color: ${({ theme }) => theme.colors.secondary};
-`
+import db from '../db.json';
+import Widget from '../src/components/widget';
+import QuizLogo from '../src/components/quizLogo';
+import QuizBackground from '../src/components/quizBackground';
+import Footer from '../src/components/footer';
+import GitHubCorner from '../src/components/gitHubCorner';
+import Input from '../src/components/input';
+import Button from '../src/components/button';
+
+// const BackgroundImage = styled.div`
+//   background-image: url(${db.bg});
+//   flex: 1;
+//   background-size: cover;
+//   background-position: center;
+// `;
 
 const QuizContainer = styled.div`
   width: 100%;
   max-width: 350px;
   padding-top: 45px;
   margin: auto 10%;
-  @media screen and (max-width: 500px){
+  @media screen and (max-width: 500px) {
     margin: auto;
     padding: 15px;
   }
-`
+`;
 
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = React.useState('');
+
   return (
     <QuizBackground backgroundImage={db.bg}>
+      <Head>
+        <title>{db.title}</title>
+      </Head>
       <QuizContainer>
+        <QuizLogo />
         <Widget>
           <Widget.Header>
-            CSS
+            <h1>{db.title}</h1>
           </Widget.Header>
           <Widget.Content>
-            <p>lorem ipsum dolor...</p>
+            <p>{db.description}</p>
+            <form onSubmit={(infosDoEvento) => {
+              infosDoEvento.preventDefault();
+              router.push(`/quiz?name=${name}`);
+              // console.log('Fazendo uma submissão por meio do react');
+            }}
+            >
+              <Input
+                name="nomeDoUsuario"
+                onChange={(infosDoEvento) => setName(infosDoEvento.target.value)}
+                placeholder="Diz ai seu nome"
+                value={name}
+              />
+              <Button type="submit" disabled={name.length === 0}>
+                {`Jogar ${name}`}
+              </Button>
+            </form>
           </Widget.Content>
         </Widget>
+
         <Widget>
           <Widget.Content>
-            <h1>Quizes da galera</h1>
-            <p>Lorem ipsum dolor...</p>
+            <h1>Quizes da Galera</h1>
+
+            <p>lorem ipsum dolor sit amet...</p>
           </Widget.Content>
         </Widget>
         <Footer />
       </QuizContainer>
-      <GitHubCorner projectUrl={'https://github.com/Henrique-Peixoto'} />
+      <GitHubCorner projectUrl="https://github.com/Henrique-Peixoto" />
     </QuizBackground>
-  )
+  );
 }
