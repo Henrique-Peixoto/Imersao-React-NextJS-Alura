@@ -2,16 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import db from '../db.json';
 
+import db from '../db.json';
 import Widget from '../src/components/widget';
+import QuizLogo from '../src/components/quizLogo';
+import QuizBackground from '../src/components/quizBackground';
 import Footer from '../src/components/footer';
 import GitHubCorner from '../src/components/gitHubCorner';
-import QuizBackground from '../src/components/quizBackground';
+import Input from '../src/components/input';
+import Button from '../src/components/button';
 
-// const Title = styled.h1`
-//   font-size: 50px;
-//   color: ${({ theme }) => theme.colors.secondary};
+// const BackgroundImage = styled.div`
+//   background-image: url(${db.bg});
+//   flex: 1;
+//   background-size: cover;
+//   background-position: center;
 // `;
 
 const QuizContainer = styled.div`
@@ -19,7 +24,7 @@ const QuizContainer = styled.div`
   max-width: 350px;
   padding-top: 45px;
   margin: auto 10%;
-  @media screen and (max-width: 500px){
+  @media screen and (max-width: 500px) {
     margin: auto;
     padding: 15px;
   }
@@ -32,37 +37,40 @@ export default function Home() {
   return (
     <QuizBackground backgroundImage={db.bg}>
       <Head>
-        <title>AluraQuiz - Modelo Base</title>
+        <title>{db.title}</title>
       </Head>
       <QuizContainer>
+        <QuizLogo />
         <Widget>
           <Widget.Header>
-            CSS
+            <h1>{db.title}</h1>
           </Widget.Header>
           <Widget.Content>
-            <form onSubmit={function (e) {
-              e.preventDefault();
-
+            <p>{db.description}</p>
+            <form onSubmit={(infosDoEvento) => {
+              infosDoEvento.preventDefault();
               router.push(`/quiz?name=${name}`);
+              // console.log('Fazendo uma submissão por meio do react');
             }}
             >
-              <input
-                onChange={function (e) {
-                  setName(e.target.value);
-                }}
-                placeholder="Diz seu nome ai"
+              <Input
+                name="nomeDoUsuario"
+                onChange={(infosDoEvento) => setName(infosDoEvento.target.value)}
+                placeholder="Diz ai seu nome"
+                value={name}
               />
-              <button type="submit" disabled={name.length === 0}>
-                Jogar
-                {name}
-              </button>
+              <Button type="submit" disabled={name.length === 0}>
+                {`Jogar ${name}`}
+              </Button>
             </form>
           </Widget.Content>
         </Widget>
+
         <Widget>
           <Widget.Content>
-            <h1>Quizes da galera</h1>
-            <p>Lorem ipsum dolor...</p>
+            <h1>Quizes da Galera</h1>
+
+            <p>lorem ipsum dolor sit amet...</p>
           </Widget.Content>
         </Widget>
         <Footer />
